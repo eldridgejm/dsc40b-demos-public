@@ -130,8 +130,17 @@ def DisplayResults(method1, method2):
 		results2.append(end - start)
 
 	labels = [method1, method2]
-	ax = plt.hist([results, results2], bins = 100, label = labels, stacked=True)
+	ax = plt.hist((results, results2), 
+		bins = 100, 
+		label = labels, 
+		histtype = 'stepfilled',
+		density = True,
+		alpha = 0.7,
+		color = ("red", "blue"))
 	plt.legend()
-	plt.figure(num=None, figsize=(8, 6), dpi=320, facecolor='w', edgecolor='k')
+	plt.title("Histogram of Runtimes")
+	plt.xlabel('Runtime')
+	plt.ylabel('Count')
+	plt.figure(num=None, figsize=(8, 6), facecolor='w', edgecolor='k')
 
 	return ax, np.mean(results), np.mean(results2)
