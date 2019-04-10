@@ -43,7 +43,7 @@ def CallOrder(arr):
 	mergeSort(arr)
 
 
-def DisplayResults(method1, method2):
+def DisplayResults(method1, method2, inputType = "Random"):
 	def partition(array , low , high):
 		i = low - 1
 		pivot = array[high]
@@ -72,6 +72,7 @@ def DisplayResults(method1, method2):
 			mid = partition(array,low,high)
 			QuickSort(array,low,mid-1, method)
 			QuickSort(array,mid+1,high, method)
+
 	def quickselect(l, k, pivot_fn):
 		if len(l) == 1:
 			assert k == 0
@@ -103,19 +104,29 @@ def DisplayResults(method1, method2):
 	    b = L[mid]
 	    c = L[high-1]
 	    if a <= b <= c:
-	        return b
+	        return mid
 	    if c <= b <= a:
-	        return b
+	        return mid
 	    if a <= c <= b:
-	        return c
+	        return high-1
 	    if b <= c <= a:
-	        return c
-	    return a
+	        return high-1
+	    return low
+	
+
 	results = []
 	iteration = 1000
 	n = 100
 	for _ in range(iteration):
-		randomList = np.random.randint(n, size = n)
+		if (inputType == "Random"):
+			randomList = np.random.randint(n, size = n)
+		if (inputType == "Sorted"):
+			randomList = np.array(list(range(n)))
+		if (inputType == "First Half Sorted"):
+			half = int((n/2))
+			randomList = np.array(list(list(range(half)) + np.random.randint(half, size = half)))
+		if (inputType == "Partially Sorted"):
+			randomList = np.array(list(np.random.randint(int(n/4), size = int(n/4))) + list(range(int(n/2))) + list(np.random.randint(int(n/4), size = int(n/4))))
 		start = time.time()
 		QuickSort(randomList, 0, len(randomList)-1, method1)
 		end = time.time()
@@ -123,7 +134,15 @@ def DisplayResults(method1, method2):
 
 	results2 = []
 	for _ in range(iteration):
-		randomList = np.random.randint(n, size = n)
+		if (inputType == "Random"):
+			randomList = np.random.randint(n, size = n)
+		if (inputType == "Sorted"):
+			randomList = np.array(list(range(n)))
+		if (inputType == "Half Sorted"):
+			half = int((n/2))
+			randomList = np.array(list(list(range(half)) + np.random.randint(half, size = half)))
+		if (inputType == "Partially Sorted"):
+			randomList = np.array(list(np.random.randint(int(n/4), size = int(n/4))) + list(range(int(n/2))) + list(np.random.randint(int(n/4), size = int(n/4))))
 		start = time.time()
 		QuickSort(randomList, 0, len(randomList)-1, method2)
 		end = time.time()
